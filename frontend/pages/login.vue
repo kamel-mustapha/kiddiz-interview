@@ -78,7 +78,7 @@
         stroke-width="0"
       />
     </svg>
-    <div class="w-full p-6 space-y-4 md:space-y-6 sm:p-8 mt-20">
+    <div class="w-full p-6 space-y-4 md:space-y-6 sm:p-8 mt-24">
       <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">Sign in to your account</h1>
       <form class="max-w-[450px]">
         <div class="mb-5">

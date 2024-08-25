@@ -12,7 +12,7 @@ const links = [
 </script>
 
 <template>
-  <nav class="bg-white border-gray-200 dark:bg-gray-900">
+  <nav class="bg-white border-gray-200 dark:bg-gray-900 fixed w-full">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
       <Logo />
       <div class="flex gap-2 md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
@@ -32,7 +32,7 @@ const links = [
       </div>
     </div>
   </nav>
-  <div class="min-h-screen">
+  <div class="min-h-screen pt-16">
     <slot />
   </div>
   <footer class="bg-white rounded-lg shadow dark:bg-gray-900 m-4">
