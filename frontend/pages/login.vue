@@ -1,5 +1,33 @@
+<script setup lang="ts">
+import { APP_CONFIG } from "~/environment";
+
+const email = ref<string>();
+const password = ref<string>();
+const onSubmit = async () => {
+  const res: any = await $fetch(`${APP_CONFIG.API_URL}auth/login`, {
+    method: "POST",
+    body: { email: email.value, password: password.value },
+  });
+  if (res.status && res.status === 200) {
+    Swal.fire({
+      ...toastConfig,
+      title: "Login successful",
+      icon: "success",
+    });
+    setTimeout(async () => {
+      await navigateTo("/login");
+    }, 5000);
+  } else {
+    Swal.fire({
+      ...toastConfig,
+      title: "An error occured please try again",
+      icon: "error",
+    });
+  }
+};
+</script>
 <template>
-  <section class="bg-gray-50 dark:bg-gray-900 flex">
+  <section class="dark:bg-gray-900 flex">
     <svg class="hidden md:block w-full" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 550.59998 412.44495">
       <path d="m550.59998,411.25495c0,.65997-.53003,1.19-1.19,1.19H1.19c-.66,0-1.19-.53003-1.19-1.19s.53-1.19,1.19-1.19h548.21997c.65997,0,1.19.53003,1.19,1.19Z" fill="#2e2e43" stroke-width="0" />
       <path
@@ -80,10 +108,11 @@
     </svg>
     <div class="w-full p-6 space-y-4 md:space-y-6 sm:p-8 mt-24">
       <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">Sign in to your account</h1>
-      <form class="max-w-[450px]">
+      <form @submit.prevent="onSubmit" class="max-w-[450px]">
         <div class="mb-5">
           <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
           <input
+            v-model="email"
             type="email"
             id="email"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -94,6 +123,7 @@
         <div class="mb-5">
           <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
           <input
+            v-model="password"
             type="password"
             id="password"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

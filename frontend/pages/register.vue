@@ -1,5 +1,44 @@
+<script setup lang="ts">
+import { APP_CONFIG } from "~/environment";
+import { toastConfig } from "~/utils";
+
+const email = ref<string>();
+const password = ref<string>();
+const confirmPassword = ref<string>();
+
+const onSubmit = async () => {
+  if (password.value !== confirmPassword.value) {
+    Swal.fire({
+      ...toastConfig,
+      title: "Sorry, the passwords doesn't match",
+      icon: "error",
+    });
+    return;
+  }
+  const res: any = await $fetch(`${APP_CONFIG.API_URL}auth/register`, {
+    method: "POST",
+    body: { email: email.value, password: password.value, confirmPassword: confirmPassword },
+  });
+  if (res.status && res.status === 200) {
+    Swal.fire({
+      ...toastConfig,
+      title: "Account created successfully, you will be redirected to login page",
+      icon: "success",
+    });
+    setTimeout(async () => {
+      await navigateTo("/login");
+    }, 5000);
+  } else {
+    Swal.fire({
+      ...toastConfig,
+      title: "An error occured please try again",
+      icon: "error",
+    });
+  }
+};
+</script>
 <template>
-  <section class="bg-gray-50 dark:bg-gray-900 flex py-8 px-6">
+  <section class="dark:bg-gray-900 flex py-8 px-6">
     <svg class="hidden md:block mt-12 w-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 719.53003 455.36479" xmlns:xlink="http://www.w3.org/1999/xlink">
       <path
         d="M602.46002,35.65002H.67004c.84998-4.82001,2.50995-9.38,4.82996-13.51001C12.91003,8.94,27.04004,0,43.23004,0H559.90002c16.17999,0,30.32001,8.94,37.71997,22.14001,2.32001,4.13,3.98999,8.69,4.84003,13.51001Z"
@@ -85,38 +124,41 @@
     </svg>
     <div class="w-full p-6 space-y-4 md:space-y-6 sm:p-8">
       <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">Create an account</h1>
-      <form class="max-w-[450px] space-y-4 md:space-y-6" action="#">
+      <form @submit.prevent="onSubmit" class="max-w-[450px] space-y-4 md:space-y-6" action="#">
         <div>
           <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
           <input
+            v-model="email"
             type="email"
             name="email"
             id="email"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="name@company.com"
-            required=""
+            required
           />
         </div>
         <div>
           <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
           <input
+            v-model="password"
             type="password"
             name="password"
             id="password"
             placeholder="••••••••"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            required=""
+            required
           />
         </div>
         <div>
-          <label for="confirm-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>
+          <label for="confirmPassword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>
           <input
-            type="confirm-password"
-            name="confirm-password"
-            id="confirm-password"
+            v-model="confirmPassword"
+            type="password"
+            name="confirmPassword"
+            id="confirmPassword"
             placeholder="••••••••"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            required=""
+            required
           />
         </div>
 
