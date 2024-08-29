@@ -49,7 +49,7 @@ const onSubmit = async () => {
       />
       <path
         d="m207.65881,347.99009h-94.58317c-4.45853,0-8.08586-3.62733-8.08586-8.08586v-24.85271c0-4.45853,3.62733-8.08586,8.08586-8.08586h94.58317c4.45853,0,8.08586,3.62733,8.08586,8.08586v24.85271c0,4.45853-3.62733,8.08586-8.08586,8.08586Z"
-        fill="#6c63ff"
+        fill="#00B9FF"
         stroke-width="0"
       />
       <line x1="106.69815" y1="1" x2="177.44809" y2="1" fill="none" stroke="#bab7c9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
@@ -75,7 +75,7 @@ const onSubmit = async () => {
       />
       <path
         d="m348.03434,150.58794l-9.92279.11025c-7.00432,1.13496-8.86567,4.90303-10.37678,11.82954-2.31532,10.56486-5.27271,24.64485-4.6501,24.83943.99228.32427,17.96481,8.08091,26.55809,6.16122l-1.60192-42.94042h-.00649Z"
-        fill="#6c63ff"
+        fill="#00B9FF"
         stroke-width="0"
       />
       <rect x="347.12191" y="381.03382" width="13.20445" height="18.7301" transform="translate(-4.33864 3.97541) rotate(-.64)" fill="#f1a1a4" stroke-width="0" />
@@ -94,7 +94,7 @@ const onSubmit = async () => {
         fill="#2f2e43"
         stroke-width="0"
       />
-      <polygon points="386.58409 226.07905 327.87095 226.73407 344.64242 150.63335 370.22768 150.34149 386.58409 226.07905" fill="#6c63ff" stroke-width="0" />
+      <polygon points="386.58409 226.07905 327.87095 226.73407 344.64242 150.63335 370.22768 150.34149 386.58409 226.07905" fill="#00B9FF" stroke-width="0" />
       <path
         id="uuid-0d1d7be6-7e67-43a2-9b15-a4bbed67d7bc-92-90-42-431"
         d="m392.31726,266.35395c.98581,4.61117-.68097,8.84622-3.72266,9.46233-3.04819.6226-6.31686-2.61365-7.29618-7.22485-.42155-1.83538-.38264-3.74212.11673-5.56454l-12.4262-72.2289,14.50157-2.89252,6.4271,73.40277c1.20629,1.47869,2.02996,3.21033,2.39964,5.05867h0v-.01296Z"
@@ -103,15 +103,15 @@ const onSubmit = async () => {
       />
       <path
         d="m360.31137,150.45175l9.92279-.11025c7.02378.9858,8.96942,4.70846,10.64269,11.60254,2.54879,10.51297,5.81099,24.51514,5.20136,24.72918-.99228.33724-17.77673,8.47005-26.40892,6.74491l.65504-42.96637h-.01296Z"
-        fill="#6c63ff"
+        fill="#00B9FF"
         stroke-width="0"
       />
     </svg>
     <div class="w-full p-6 space-y-4 md:space-y-6 sm:p-8 mt-24">
-      <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">Sign in to your account</h1>
+      <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">Se connecter à mon compte</h1>
       <form @submit.prevent="onSubmit" class="max-w-[450px]">
         <div class="mb-5">
-          <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+          <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Votre email</label>
           <input
             v-model="email"
             type="email"
@@ -122,7 +122,7 @@ const onSubmit = async () => {
           />
         </div>
         <div class="mb-5">
-          <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
+          <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Votre mot de passe</label>
           <input
             v-model="password"
             type="password"
@@ -131,13 +131,7 @@ const onSubmit = async () => {
             required
           />
         </div>
-
-        <button
-          type="submit"
-          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        >
-          Submit
-        </button>
+        <ButtonPrimary type="submit" message="Se connecter" />
       </form>
     </div>
   </section>
