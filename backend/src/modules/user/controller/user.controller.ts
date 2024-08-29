@@ -5,8 +5,8 @@ import {
   Get,
   HttpCode,
   NotFoundException,
+  Param,
   Put,
-  Query,
 } from '@nestjs/common';
 import { UserService } from '../service/user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -15,8 +15,8 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UserController {
   constructor(private userService: UserService) {}
   @HttpCode(200)
-  @Get()
-  async findOne(@Query('username') username: string) {
+  @Get(':username')
+  async findOne(@Param('username') username: string) {
     if (!username)
       throw new BadRequestException('You need to provide an username');
     const user = await this.userService.findByUsername(username);
