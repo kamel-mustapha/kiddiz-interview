@@ -9,4 +9,16 @@ export class UserService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
   ) {}
+
+  async findByUsername(username: string) {
+    const user = this.usersRepository.findOneBy({ username });
+    if (!user) return;
+    return user;
+  }
+
+  async updateEmail(user: User, email: string) {
+    user.email = email;
+    const updatedUser = await this.usersRepository.save(user);
+    return updatedUser;
+  }
 }

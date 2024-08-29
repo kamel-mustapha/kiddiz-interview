@@ -23,6 +23,10 @@ import { KidModule } from './modules/kid/kid.module';
             path: 'auth',
             module: AuthModule,
           },
+          {
+            path: 'user',
+            module: UserModule,
+          },
         ],
       },
     ]),
