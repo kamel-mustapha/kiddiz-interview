@@ -4,6 +4,7 @@ import { toastConfig } from "~/utils";
 
 const email = ref<string>();
 const password = ref<string>();
+
 const onSubmit = async () => {
   const res: any = await $fetch(`${APP_CONFIG.API_URL}auth/login`, {
     method: "POST",

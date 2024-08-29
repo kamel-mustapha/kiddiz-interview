@@ -1,7 +1,22 @@
 <script setup lang="ts">
 import type { Creche } from "~/models/Creche";
+import { toastConfig } from "~/utils";
 
 const creches = ref<Creche[]>([{ id: 1, name: "creche-1", userId: 4 }]);
+const showCreate = ref<boolean>(false);
+const toCreateName = ref<string>();
+
+const loadData = () => {};
+
+const onCreate = () => {
+  showCreate.value = false;
+  toCreateName.value = "";
+  Swal.fire({
+    ...toastConfig,
+    title: "Crèche créee avec succès",
+    icon: "success",
+  });
+};
 </script>
 
 <template>
@@ -9,7 +24,7 @@ const creches = ref<Creche[]>([{ id: 1, name: "creche-1", userId: 4 }]);
     <header>
       <div class="flex justify-between items-center">
         <h2 class="text-xl font-bold text-cyan-950">Liste des crèches</h2>
-        <ButtonPrimary message="Ajouter une crèche" class="text-lg" />
+        <ButtonPrimary message="Ajouter une crèche" class="text-lg" @click="showCreate = true" />
       </div>
       <div class="flex items-center gap-2 py-3 border-b border-gray-300">
         <div class="flex w-full items-center gap-2">
@@ -116,5 +131,27 @@ const creches = ref<Creche[]>([{ id: 1, name: "creche-1", userId: 4 }]);
         <span class="font-semibold text-gray-900 dark:text-white">100</span> entrées
       </span>
     </div>
+  </div>
+
+  <!-- create  dialog -->
+  <div v-if="showCreate" class="dialog w-screen h-screen fixed left-0 top-0 bg-black bg-opacity-20">
+    <form @submit.prevent="onCreate" class="absolute mx-auto max-w-sm bg-white top-1/2 -translate-y-1/2 left-0 right-0 rounded-md shadow-sm px-4 py-6">
+      <h2 class="text-center font-bold text-lg mb-4">Créer une crèche</h2>
+      <div class="mb-5">
+        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom</label>
+        <input v-model="toCreateName" type="text" id="name" class="input" placeholder="Nom de la crèche" required />
+      </div>
+      <div class="flex gap-2">
+        <ButtonPrimary type="submit" message="Créer" class="w-full" />
+        <ButtonSecondary
+          type="button"
+          message="Annuler"
+          @click="
+            showCreate = false;
+            toCreateName = '';
+          "
+        />
+      </div>
+    </form>
   </div>
 </template>
