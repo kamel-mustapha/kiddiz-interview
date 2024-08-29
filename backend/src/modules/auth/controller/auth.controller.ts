@@ -22,19 +22,19 @@ export class AuthController {
   @HttpCode(200)
   @Post('login')
   async login(@Body() body: LoginDto) {
-    const user = await this.authService.login(body);
-    if (!user) throw new UnauthorizedException('Wrong credentials');
-    const payload = { sub: user.id, username: user.email };
-    return { status: 200, access_token: this.jwtService.sign(payload) };
+    // const user = await this.authService.login(body);
+    // if (!user) throw new UnauthorizedException('Wrong credentials');
+    // const payload = { sub: user.id, username: user.email };
+    // return { status: 200, access_token: this.jwtService.sign(payload) };
   }
 
   @HttpCode(201)
   @Post('register')
   async register(@Body() body: RegisterDto) {
-    const user = await this.authService.register(body).catch((e) => {
-      throw new ConflictException('User already exist');
-    });
-    if (!user) throw new BadRequestException('Bad request');
-    return { status: 200 };
+    // const user = await this.authService.register(body).catch((e) => {
+    //   throw new ConflictException('User already exist');
+    // });
+    // if (!user) throw new BadRequestException('Bad request');
+    // return { status: 200 };
   }
 }
