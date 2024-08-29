@@ -4,10 +4,10 @@ const links = [
     name: "Home",
     link: "/",
   },
-  {
-    name: "Blog",
-    link: "/blog",
-  },
+  // {
+  //   name: "Blog",
+  //   link: "/blog",
+  // },
 ];
 </script>
 

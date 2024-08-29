@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { APP_CONFIG } from "~/environment";
+import { toastConfig } from "~/utils";
 
 const email = ref<string>();
 const password = ref<string>();
@@ -7,6 +8,13 @@ const onSubmit = async () => {
   const res: any = await $fetch(`${APP_CONFIG.API_URL}auth/login`, {
     method: "POST",
     body: { email: email.value, password: password.value },
+    onResponseError: (error: any) => {
+      Swal.fire({
+        ...toastConfig,
+        title: error?.response?._data?.message ? error.response._data.message : "An error occured please try again",
+        icon: "error",
+      });
+    },
   });
   if (res.status && res.status === 200) {
     Swal.fire({
@@ -14,15 +22,8 @@ const onSubmit = async () => {
       title: "Login successful",
       icon: "success",
     });
-    setTimeout(async () => {
-      await navigateTo("/login");
-    }, 5000);
-  } else {
-    Swal.fire({
-      ...toastConfig,
-      title: "An error occured please try again",
-      icon: "error",
-    });
+    localStorage.setItem("accessToken", res.access_token);
+    await navigateTo("/");
   }
 };
 </script>

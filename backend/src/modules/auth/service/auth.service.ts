@@ -16,6 +16,7 @@ export class AuthService {
 
   async login(body: LoginDto) {
     const user = await this.usersRepository.findOneBy({ email: body.email });
+    if (!user) return;
     const isMatch = await bcrypt.compare(body.password, user?.password);
     if (!isMatch) return;
     return user;

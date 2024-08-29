@@ -3,6 +3,7 @@ import {
   Body,
   ConflictException,
   Controller,
+  HttpCode,
   Post,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -18,6 +19,7 @@ export class AuthController {
     private jwtService: JwtService,
   ) {}
 
+  @HttpCode(200)
   @Post('login')
   async login(@Body() body: LoginDto) {
     const user = await this.authService.login(body);
@@ -26,6 +28,7 @@ export class AuthController {
     return { status: 200, access_token: this.jwtService.sign(payload) };
   }
 
+  @HttpCode(201)
   @Post('register')
   async register(@Body() body: RegisterDto) {
     const user = await this.authService.register(body).catch((e) => {

@@ -19,7 +19,7 @@ const onSubmit = async () => {
     method: "POST",
     body: { email: email.value, password: password.value, confirmPassword: confirmPassword },
   });
-  if (res.status && res.status === 200) {
+  if (res.status && res.status === 201) {
     Swal.fire({
       ...toastConfig,
       title: "Account created successfully, you will be redirected to login page",
