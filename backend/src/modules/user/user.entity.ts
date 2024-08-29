@@ -6,10 +6,10 @@ import { Kid } from '../kid/kid.entity';
 @Entity({ name: 'users' })
 export class User extends BaseEntity {
   @Column({ unique: true })
-  email: string;
-
-  @Column({ unique: true })
   username: string;
+
+  @Column()
+  email: string;
 
   @OneToMany(() => Creche, (creche) => creche.user)
   creches: Creche[];
