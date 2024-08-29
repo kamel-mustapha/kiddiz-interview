@@ -1,9 +1,12 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { BlogModule } from './modules/blog/blog.module';
 import { RouterModule } from '@nestjs/core';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { DATABASE } from 'database.cred';
+import { jwtConstants } from 'jwt.cred';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -18,11 +21,20 @@ import { RouterModule } from '@nestjs/core';
             path: 'auth',
             module: AuthModule,
           },
+          {
+            path: 'blog',
+            module: BlogModule,
+          },
         ],
       },
     ]),
+    TypeOrmModule.forRoot(DATABASE),
+    JwtModule.register({
+      global: true,
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: '12h' },
+    }),
   ],
-  controllers: [AppController],
   providers: [],
 })
 export class AppModule {}
