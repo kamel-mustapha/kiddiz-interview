@@ -25,6 +25,6 @@ export class Kid extends BaseEntity {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @ManyToMany(() => Creche, (creche) => creche.kids)
+  @ManyToMany(() => Creche, (creche) => creche.kids, { eager: true })
   creches: Creche[];
 }

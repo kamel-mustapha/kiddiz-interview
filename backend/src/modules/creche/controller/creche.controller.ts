@@ -46,7 +46,7 @@ export class CrecheController {
     @Param('id') id: number,
     @Body() updateDto: UpdateCrecheDto,
   ) {
-    return this.service.update(req.userId, id, updateDto);
+    return this.service.update(req.userId, +id, updateDto);
   }
 
   @HttpCode(200)
@@ -58,6 +58,16 @@ export class CrecheController {
   @HttpCode(200)
   @Get(':id/children')
   findCrecheChildrens(@Req() req, @Param('id') id: number) {
-    return this.service.findCrecheChildrens(req.userId, id);
+    return this.service.findCrecheChildrens(req.userId, +id);
+  }
+
+  @HttpCode(200)
+  @Delete(':id/child/:childId')
+  deleteChildFromCreche(
+    @Req() req,
+    @Param('id') id: number,
+    @Param('childId') childId: number,
+  ) {
+    return this.service.deleteChildFromCreche(req.userId, +id, +childId);
   }
 }

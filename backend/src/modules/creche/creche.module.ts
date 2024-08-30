@@ -5,10 +5,12 @@ import { UserService } from '../user/service/user.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../user/user.entity';
 import { Creche } from './creche.entity';
+import { Kid } from '../kid/kid.entity';
+import { KidService } from '../kid/service/kid.service';
 
 @Module({
   controllers: [CrecheController],
-  providers: [CrecheService, UserService],
-  imports: [TypeOrmModule.forFeature([Creche, User])],
+  providers: [CrecheService, UserService, KidService],
+  imports: [TypeOrmModule.forFeature([Creche, User, Kid])],
 })
 export class CrecheModule {}
