@@ -7,9 +7,11 @@ import {
   NotFoundException,
   Param,
   Put,
+  UseFilters,
 } from '@nestjs/common';
 import { UserService } from '../service/user.service';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { UserDto } from './dto/user.dto';
+import { DuplicateEntryException } from 'src/common/filters';
 
 @Controller()
 export class UserController {
@@ -25,11 +27,19 @@ export class UserController {
   }
 
   @HttpCode(200)
+  @UseFilters(DuplicateEntryException)
   @Put()
-  async updateUser(@Body() body: UpdateUserDto) {
-    const user = await this.userService.findByUsername(body.username);
-    if (!user) throw new NotFoundException('No user with this username found');
-    const updatedUser = await this.userService.updateEmail(user, body.email);
-    return updatedUser;
+  async updateUser(@Body() body: UserDto) {
+    const user = await this.userService.findByEmail(body.email);
+    if (user) {
+      const updatedUser = await this.userService.updateUsername(
+        user,
+        body.username,
+      );
+      return updatedUser;
+    } else {
+      const createdUser = await this.userService.create(body);
+      return createdUser;
+    }
   }
 }
