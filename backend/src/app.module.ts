@@ -31,6 +31,10 @@ import { KidModule } from './modules/kid/kid.module';
             path: 'child-cares',
             module: CrecheModule,
           },
+          {
+            path: 'child',
+            module: KidModule,
+          },
         ],
       },
     ]),

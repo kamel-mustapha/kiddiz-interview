@@ -26,6 +26,5 @@ export class Kid extends BaseEntity {
   user: User;
 
   @ManyToMany(() => Creche, (creche) => creche.kids)
-  @JoinTable()
   creches: Creche[];
 }
