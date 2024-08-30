@@ -10,7 +10,7 @@ import {
   UseFilters,
 } from '@nestjs/common';
 import { UserService } from '../service/user.service';
-import { UserDto } from './dto/user.dto';
+import { UserDto } from '../dto/user.dto';
 import { DuplicateEntryException } from 'src/common/filters';
 
 @Controller()
