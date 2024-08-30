@@ -39,11 +39,6 @@ import { KidModule } from './modules/kid/kid.module';
       },
     ]),
     TypeOrmModule.forRoot(DATABASE),
-    JwtModule.register({
-      global: true,
-      secret: jwtConstants.secret,
-      signOptions: { expiresIn: '12h' },
-    }),
   ],
 })
 export class AppModule {}

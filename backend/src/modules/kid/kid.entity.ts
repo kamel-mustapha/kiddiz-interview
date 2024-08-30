@@ -21,7 +21,7 @@ export class Kid extends BaseEntity {
   @Column({ name: 'user_id' })
   userId: number;
 
-  @ManyToOne(() => User, (user) => user.kids)
+  @ManyToOne(() => User, (user) => user.kids, { eager: true })
   @JoinColumn({ name: 'user_id' })
   user: User;
 

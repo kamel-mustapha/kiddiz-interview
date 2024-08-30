@@ -8,12 +8,14 @@ import { Creche } from '../creche.entity';
 import { Repository } from 'typeorm';
 import { CRUDService } from 'src/common/base-crud.service';
 import { KidService } from 'src/modules/kid/service/kid.service';
+import { MailerService } from '@nestjs-modules/mailer';
 
 @Injectable()
 export class CrecheService extends CRUDService {
   constructor(
     @InjectRepository(Creche) private crecheRepository: Repository<Creche>,
     private kidService: KidService,
+    private readonly mailerService: MailerService,
   ) {
     super(crecheRepository);
   }
@@ -76,34 +78,42 @@ export class CrecheService extends CRUDService {
       where: { id },
       relations: { kids: true },
     });
-
     if (!creche) throw new NotFoundException();
-
     if (creche.userId !== userId)
       throw new ForbiddenException('You cannot access to this resource');
 
-    const crecheKids = creche.kids;
+    let crecheKids = creche.kids;
 
-    const usersWithRelatedKids = [...new Set(crecheKids.map((kid) => userId))];
+    // we filter the user who deleted the creche
+    crecheKids = crecheKids.filter((kid) => kid.userId !== userId);
 
-    await this.crecheRepository.remove(creche);
+    const usersWithRelatedKidsEmails = [
+      ...new Set(crecheKids.map((kid) => kid.user.email)),
+    ];
 
-    this.informStructureDeletionUsers(usersWithRelatedKids);
+    // await this.crecheRepository.remove(creche);
+
+    this.informStructureDeletion(usersWithRelatedKidsEmails);
 
     return;
   }
 
-  informStructureDeletionUsers(users: number[]) {}
+  async informStructureDeletion(userEmails: string[]): Promise<void> {
+    for (let i = 0; i < userEmails.length; i++) {
+      // wait between 1 and 7 seconds
+      const secondsToWait = Math.trunc(Math.random() * 7) + 1;
+      // send only by 3
+      if (i % 3 === 0)
+        await new Promise((r) => setTimeout(r, secondsToWait * 1000));
+      this.sendEmail(userEmails[i]);
+    }
+  }
 
-  informStructureDeletionUser(userEmail: string): Promise<void> {
-    // wait between 1 and 7 seconds
-    const secondsToWait = Math.trunc(Math.random() * 7) + 1;
-
-    return new Promise<void>((resolve) => {
-      setTimeout(() => {
-        console.log(userEmail, 'informed!');
-        resolve();
-      }, secondsToWait * 1000);
+  async sendEmail(email: string) {
+    await this.mailerService.sendMail({
+      to: email,
+      subject: 'Action requise',
+      text: 'Une action est requise dans votre compe kiddiz',
     });
   }
 }

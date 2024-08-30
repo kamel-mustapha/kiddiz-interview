@@ -6,7 +6,6 @@ import {
   HttpCode,
   NotFoundException,
   Post,
-  UnauthorizedException,
   UseFilters,
 } from '@nestjs/common';
 import { LoginDto } from '../dto/auth-login.dto';
