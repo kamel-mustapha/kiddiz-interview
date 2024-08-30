@@ -55,4 +55,10 @@ export class CrecheController {
   remove(@Req() req, @Param('id') id: string) {
     return this.service.delete(req.userId, +id);
   }
+
+  @HttpCode(200)
+  @Get(':id/children')
+  findCrecheChildrens(@Req() req, @Param('id') id: number) {
+    return this.service.findCrecheChildrens(req.userId, id);
+  }
 }

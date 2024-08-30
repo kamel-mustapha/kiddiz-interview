@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Creche } from '../creche.entity';
 import { Repository } from 'typeorm';
@@ -10,5 +14,19 @@ export class CrecheService extends CRUDService {
     @InjectRepository(Creche) private crecheRepository: Repository<Creche>,
   ) {
     super(crecheRepository);
+  }
+
+  async findCrecheChildrens(userId: number, id: number) {
+    const entry = await this.crecheRepository.findOne({
+      where: { id: id },
+      relations: { kids: true },
+    });
+
+    if (!entry) throw new NotFoundException();
+
+    if (entry.userId !== userId)
+      throw new ForbiddenException('You cannot access to this resource');
+
+    return [...entry.kids];
   }
 }

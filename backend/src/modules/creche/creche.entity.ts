@@ -1,6 +1,14 @@
 import { BaseEntity } from 'src/common/base.entity';
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+} from 'typeorm';
 import { User } from '../user/user.entity';
+import { Kid } from '../kid/kid.entity';
 
 @Entity({ name: 'creches' })
 export class Creche extends BaseEntity {
@@ -13,4 +21,8 @@ export class Creche extends BaseEntity {
   @ManyToOne(() => User, (user) => user.creches)
   @JoinColumn({ name: 'user_id' })
   user: User;
+
+  @ManyToMany(() => Kid, (kid) => kid.creches)
+  @JoinTable()
+  kids: Kid[];
 }
