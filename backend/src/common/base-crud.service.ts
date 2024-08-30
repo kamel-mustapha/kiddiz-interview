@@ -46,6 +46,8 @@ export class CRUDService {
     if (entry.userId !== userId)
       throw new ForbiddenException('You cannot access to this resource');
 
-    return this.repository.remove(entry);
+    await this.repository.remove(entry);
+
+    return;
   }
 }

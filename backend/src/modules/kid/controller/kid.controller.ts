@@ -45,7 +45,7 @@ export class KidController {
     return this.service.update(req.userId, id, updateDto);
   }
 
-  @HttpCode(200)
+  @HttpCode(204)
   @Delete(':id')
   remove(@Req() req, @Param('id') id: string) {
     return this.service.delete(req.userId, +id);

@@ -70,4 +70,40 @@ export class CrecheService extends CRUDService {
 
     return creche;
   }
+
+  async delete(userId: number, id: number) {
+    const creche = await this.crecheRepository.findOne({
+      where: { id },
+      relations: { kids: true },
+    });
+
+    if (!creche) throw new NotFoundException();
+
+    if (creche.userId !== userId)
+      throw new ForbiddenException('You cannot access to this resource');
+
+    const crecheKids = creche.kids;
+
+    const usersWithRelatedKids = [...new Set(crecheKids.map((kid) => userId))];
+
+    await this.crecheRepository.remove(creche);
+
+    this.informStructureDeletionUsers(usersWithRelatedKids);
+
+    return;
+  }
+
+  informStructureDeletionUsers(users: number[]) {}
+
+  informStructureDeletionUser(userEmail: string): Promise<void> {
+    // wait between 1 and 7 seconds
+    const secondsToWait = Math.trunc(Math.random() * 7) + 1;
+
+    return new Promise<void>((resolve) => {
+      setTimeout(() => {
+        console.log(userEmail, 'informed!');
+        resolve();
+      }, secondsToWait * 1000);
+    });
+  }
 }
