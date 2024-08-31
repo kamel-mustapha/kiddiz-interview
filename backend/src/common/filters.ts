@@ -18,7 +18,7 @@ export class DuplicateEntryException implements ExceptionFilter {
     if (exception.errno && exception.errno === 1062) {
       httpAdapter.reply(
         ctx.getResponse(),
-        { status: 409, message: 'entry already exist' },
+        { status: 409, message: 'Entrée existe déjà' },
         409,
       );
     } else {

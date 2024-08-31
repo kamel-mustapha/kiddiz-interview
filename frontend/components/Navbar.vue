@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { user } from "~/stores/user";
+
 const links = [
   {
     name: "Crèches",
@@ -18,7 +20,9 @@ const links = [
       <div class="bg-[#0D2436] text-white rounded-full px-6 py-3 gap-8 flex font-semibold">
         <router-link v-for="link in links" :to="link.link" class="hover:text-primary duration-200">{{ link.name }}</router-link>
       </div>
-      <span>Welcome <span class="text-primary">Kamel</span></span>
+      <span
+        >Welcome <span class="text-primary">{{ user?.username }}</span></span
+      >
     </div>
   </nav>
 </template>

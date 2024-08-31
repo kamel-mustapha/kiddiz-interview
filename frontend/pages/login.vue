@@ -1,41 +1,51 @@
 <script setup lang="ts">
 import { APP_CONFIG } from "~/environment";
 import { toastConfig } from "~/utils";
+import { user } from "~/stores/user";
+
 definePageMeta({
   layout: "offline",
 });
 
 const username = ref<string>();
 const email = ref<string>();
-const showEmail = ref<boolean>();
+const showEmail = ref<boolean>(false);
 
 const onSubmit = async () => {
-  showEmail.value = true;
-  Swal.fire({
-    ...toastConfig,
-    title: "Aucun compte trouvé, veuillez fournir votre email",
-    icon: "warning",
+  const url = showEmail.value ? `${APP_CONFIG.API_URL}auth/register` : `${APP_CONFIG.API_URL}auth/login`;
+  console.log(url);
+  let body: { username?: string; email?: string } = { username: username.value };
+  if (showEmail) body = { ...body, email: email.value };
+  const res: any = await $fetch(url, {
+    method: "POST",
+    body,
+    onResponseError: (error: any) => {
+      if (error?.response?._data?.message === "User not found") {
+        showEmail.value = true;
+        Swal.fire({
+          ...toastConfig,
+          title: "Aucun compte trouvé, veuillez fournir votre email",
+          icon: "warning",
+        });
+      } else {
+        Swal.fire({
+          ...toastConfig,
+          title: error?.response?._data?.message ? error.response._data.message : "Une erreur est survenue, veuillez réessayer",
+          icon: "error",
+        });
+      }
+    },
   });
-  // const res: any = await $fetch(`${APP_CONFIG.API_URL}auth/login`, {
-  //   method: "POST",
-  //   body: { email: username.value },
-  //   onResponseError: (error: any) => {
-  //     Swal.fire({
-  //       ...toastConfig,
-  //       title: error?.response?._data?.message ? error.response._data.message : "An error occured please try again",
-  //       icon: "error",
-  //     });
-  //   },
-  // });
-  // if (res.status && res.status === 200) {
-  //   Swal.fire({
-  //     ...toastConfig,
-  //     title: "Login successful",
-  //     icon: "success",
-  //   });
-  //   localStorage.setItem("accessToken", res.access_token);
-  //   await navigateTo("/");
-  // }
+  console.log("eee", res);
+  if (res.username) {
+    Swal.fire({
+      ...toastConfig,
+      title: "Login successful",
+      icon: "success",
+    });
+    user.value = { id: res.id, username: res.username, email: res.email };
+    await navigateTo("/");
+  }
 };
 </script>
 <template>
