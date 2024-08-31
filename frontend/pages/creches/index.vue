@@ -114,6 +114,39 @@ const onDelete = (id: number) => {
   });
 };
 
+const onExtract = async (crecheId: number | undefined) => {
+  console.log(crecheId);
+  let extractUrl = `${APP_CONFIG.API_URL}child/export.csv`;
+  if (crecheId) extractUrl += `?crecheId=${crecheId}`;
+  const res: any = await $fetch(extractUrl, {
+    method: "GET",
+    headers: { "X-Auth": user.value?.username ? user.value?.username : "" },
+    responseType: "blob",
+    onResponseError: (error: any) => {
+      isLoading.value = false;
+      Swal.fire({
+        ...toastConfig,
+        title: error?.response?._data?.message ? error.response._data.message : "Une erreur est survenue, veuillez réessayer",
+        icon: "error",
+      });
+    },
+  });
+  // Create a blob from the response with type 'text/csv'
+  const blob = new Blob([res], { type: "text/csv;charset=utf-8;" });
+  const url = window.URL.createObjectURL(blob);
+
+  // Create a link element, trigger the download, and remove the link
+  const link = document.createElement("a");
+  link.href = url;
+  link.setAttribute("download", crecheId ? `children-${crecheId}.csv` : "children.csv"); // Set the desired file name
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  // Clean up the object URL
+  window.URL.revokeObjectURL(url);
+};
+
 loadData();
 </script>
 
@@ -136,7 +169,7 @@ loadData();
           <SearchSvg />
           <input placeholder="Rechercher" class="w-full outline-none border-none focus:border-none focus:outline-none focus:ring-transparent" type="search" name="" id="" />
         </div>
-        <DownloadSvg />
+        <DownloadSvg @click="onExtract()" />
       </div>
     </header>
 
@@ -158,6 +191,9 @@ loadData();
             </router-link>
             <button @click="onEdit(creche)" class="bg-blue-800 rounded-md px-4 py-2 mr-2 hover:opacity-70">
               <PenSvg />
+            </button>
+            <button @click="onExtract(creche.id)" class="bg-green-700 rounded-md px-4 py-2 hover:opacity-70 mr-2">
+              <ExtractSvg />
             </button>
             <button @click="onDelete(creche.id)" class="bg-red-700 rounded-md px-4 py-2 hover:opacity-70">
               <TrashSvg />
