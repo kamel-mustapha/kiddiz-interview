@@ -7,7 +7,9 @@ import {
   Param,
   Post,
   Put,
+  Query,
   Req,
+  Res,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from 'src/modules/auth/guards/auth/auth.guard';
@@ -31,6 +33,14 @@ export class KidController {
   @Get()
   findAll(@Req() req) {
     return this.service.findAll(req.userId);
+  }
+
+  @HttpCode(200)
+  @Get('export.csv')
+  exportChildren(@Req() req, @Res() res, @Query('crecheId') crecheId: number) {
+    res.setHeader('Content-Type', 'text/csv');
+    res.setHeader('Content-Disposition', 'attachment; filename="children.csv"');
+    return this.service.exportChildren(req.userId, crecheId, res);
   }
 
   @HttpCode(200)
