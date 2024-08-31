@@ -41,11 +41,6 @@ const onSubmit = async () => {
   });
   loaders.value.loading = false;
   if (res.username) {
-    Swal.fire({
-      ...toastConfig,
-      title: "Login successful",
-      icon: "success",
-    });
     user.value = { id: res.id, username: res.username, email: res.email };
     await navigateTo("/");
   }

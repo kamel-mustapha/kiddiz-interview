@@ -85,7 +85,7 @@ const onConfirmEdit = async () => {
 
 const onDelete = (id: number) => {
   Swal.fire({
-    title: "Etes vous sûr de vouloir supprimé cet élément?",
+    title: "Etes vous sûr de vouloir supprimer cet élément?",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
