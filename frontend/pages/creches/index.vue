@@ -151,9 +151,11 @@ loadData();
           <th scope="row" class="py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ creche.name }}</th>
           <td class="py-4">{{ creche.userId }}</td>
           <td class="py-4 text-right">
-            <button class="bg-primary rounded-md px-4 py-2 mr-2 hover:opacity-70">
-              <EyeSvg />
-            </button>
+            <router-link :to="'/creches/' + creche.id">
+              <button class="bg-primary rounded-md px-4 py-2 mr-2 hover:opacity-70">
+                <EyeSvg />
+              </button>
+            </router-link>
             <button @click="onEdit(creche)" class="bg-blue-800 rounded-md px-4 py-2 mr-2 hover:opacity-70">
               <PenSvg />
             </button>
