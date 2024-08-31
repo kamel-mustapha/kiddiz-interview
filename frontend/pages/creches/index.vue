@@ -115,7 +115,6 @@ const onDelete = (id: number) => {
 };
 
 const onExtract = async (crecheId: number | undefined) => {
-  console.log(crecheId);
   let extractUrl = `${APP_CONFIG.API_URL}child/export.csv`;
   if (crecheId) extractUrl += `?crecheId=${crecheId}`;
   const res: any = await $fetch(extractUrl, {
