@@ -144,7 +144,7 @@ loadData();
         </tr>
         <!-- No data found -->
         <tr v-if="kids.length === 0">
-          <th class="py-4 text-center">Aucune crèche trouvée</th>
+          <th class="py-4 text-center">Aucun enfant trouvé</th>
         </tr>
       </tbody>
     </table>

@@ -20,6 +20,20 @@ export class CrecheService extends CRUDService {
     super(crecheRepository);
   }
 
+  async findById(userId: number, id: number) {
+    const entry = await this.crecheRepository.findOne({
+      where: { id: id },
+      relations: { kids: true },
+    });
+
+    if (!entry) throw new NotFoundException();
+
+    if (entry.userId !== userId)
+      throw new ForbiddenException('You cannot access to this resource');
+
+    return entry;
+  }
+
   async findCrecheChildrens(userId: number, id: number) {
     const creche = await this.crecheRepository.findOne({
       where: { id },

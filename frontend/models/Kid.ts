@@ -4,6 +4,5 @@ export interface Kid {
   id: number;
   firstName: string;
   lastName: string;
-  userId: number;
-  creches: Creche[];
+  userId?: number;
 }
