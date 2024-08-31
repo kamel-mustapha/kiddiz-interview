@@ -91,7 +91,7 @@ export class CrecheService extends CRUDService {
       ...new Set(crecheKids.map((kid) => kid.user.email)),
     ];
 
-    // await this.crecheRepository.remove(creche);
+    await this.crecheRepository.remove(creche);
 
     this.informStructureDeletion(usersWithRelatedKidsEmails);
 

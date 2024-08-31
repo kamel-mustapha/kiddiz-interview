@@ -2,6 +2,7 @@
 import { APP_CONFIG } from "~/environment";
 import { toastConfig } from "~/utils";
 import { user } from "~/stores/user";
+import { loaders } from "~/stores/loaders";
 
 definePageMeta({
   layout: "offline",
@@ -12,6 +13,7 @@ const email = ref<string>();
 const showEmail = ref<boolean>(false);
 
 const onSubmit = async () => {
+  loaders.value.loading = true;
   const url = showEmail.value ? `${APP_CONFIG.API_URL}auth/register` : `${APP_CONFIG.API_URL}auth/login`;
   console.log(url);
   let body: { username?: string; email?: string } = { username: username.value };
@@ -20,6 +22,7 @@ const onSubmit = async () => {
     method: "POST",
     body,
     onResponseError: (error: any) => {
+      loaders.value.loading = false;
       if (error?.response?._data?.message === "User not found") {
         showEmail.value = true;
         Swal.fire({
@@ -36,7 +39,7 @@ const onSubmit = async () => {
       }
     },
   });
-  console.log("eee", res);
+  loaders.value.loading = false;
   if (res.username) {
     Swal.fire({
       ...toastConfig,

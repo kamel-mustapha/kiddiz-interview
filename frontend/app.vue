@@ -1,7 +1,10 @@
+<script setup lang="ts">
+import { loaders } from "./stores/loaders";
+</script>
 <template>
   <NuxtLayout>
     <NuxtPage />
-    <!-- <div class="bg-white bg-opacity-10 w-screen h-screen fixed top-0 left-0 backdrop-blur-sm">
+    <div v-show="loaders?.loading" class="bg-white bg-opacity-10 w-screen h-screen fixed top-0 left-0 backdrop-blur-sm">
       <svg class="absolute left-0 right-0 mx-auto top-1/2 -translate-y-1/2" width="70" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150">
         <path
           fill="none"
@@ -15,6 +18,6 @@
           <animate attributeName="stroke-dashoffset" calcMode="spline" dur="2" values="685;-685" keySplines="0 0 1 1" repeatCount="indefinite"></animate>
         </path>
       </svg>
-    </div> -->
+    </div>
   </NuxtLayout>
 </template>
