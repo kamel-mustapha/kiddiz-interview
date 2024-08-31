@@ -5,7 +5,7 @@ import { toastConfig } from "~/utils";
 import { user } from "~/stores/user";
 import { loaders } from "~/stores/loaders";
 
-const creches = ref<Creche[]>([{ id: 1, name: "creche-1", userId: 4 }]);
+const creches = ref<Creche[]>([]);
 const showCreate = ref<boolean>(false);
 const toCreateName = ref<string>();
 const toEditId = ref<number>();
@@ -146,6 +146,11 @@ const onExtract = async (crecheId: number | undefined) => {
   window.URL.revokeObjectURL(url);
 };
 
+const onSearch = (event: any) => {
+  if (event.target.value.length === 0) loadData();
+  creches.value = creches.value.filter((creche) => creche.name.includes(event.target.value));
+};
+
 loadData();
 </script>
 
@@ -166,7 +171,7 @@ loadData();
       <div class="flex items-center gap-2 py-3 border-b border-gray-300 mt-4">
         <div class="flex w-full items-center gap-2">
           <SearchSvg />
-          <input placeholder="Rechercher" class="w-full outline-none border-none focus:border-none focus:outline-none focus:ring-transparent" type="search" name="" id="" />
+          <input @input="onSearch($event)" placeholder="Rechercher" class="w-full outline-none border-none focus:border-none focus:outline-none focus:ring-transparent" type="search" name="" id="" />
         </div>
         <DownloadSvg @click="onExtract()" />
       </div>
@@ -207,8 +212,6 @@ loadData();
     </table>
 
     <Loaders v-show="isLoading" />
-
-    <Pagination v-if="creches.length > 5" />
   </div>
 
   <!-- create  dialog -->
