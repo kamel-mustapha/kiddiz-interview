@@ -4,7 +4,7 @@ export default defineNuxtConfig({
     head: {
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1",
-      title: "Skills Showcase By Kamel Dine",
+      title: "Kiddiz | Test technique",
       script: [{ src: "https://cdn.jsdelivr.net/npm/sweetalert2@11", defer: true }],
     },
   },

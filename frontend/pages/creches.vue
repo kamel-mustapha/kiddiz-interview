@@ -5,6 +5,7 @@ import { toastConfig } from "~/utils";
 const creches = ref<Creche[]>([{ id: 1, name: "creche-1", userId: 4 }]);
 const showCreate = ref<boolean>(false);
 const toCreateName = ref<string>();
+const isLoading = ref<boolean>(true);
 
 const loadData = () => {};
 
@@ -26,7 +27,7 @@ const onCreate = () => {
         <h2 class="text-xl font-bold text-cyan-950">Liste des crèches</h2>
         <ButtonPrimary message="Ajouter une crèche" class="text-lg" @click="showCreate = true" />
       </div>
-      <div class="flex items-center gap-2 py-3 border-b border-gray-300">
+      <div class="flex items-center gap-2 py-3 border-b border-gray-300 mt-4">
         <div class="flex w-full items-center gap-2">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -39,7 +40,7 @@ const onCreate = () => {
           </svg>
           <input placeholder="Rechercher" class="w-full outline-none border-none focus:border-none focus:outline-none focus:ring-transparent" type="search" name="" id="" />
         </div>
-        <svg class="cursor-pointer" width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg class="cursor-pointer active:scale-90 duration-200" width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             opacity="0.5"
             d="M17 9.00195C19.175 9.01406 20.3529 9.11051 21.1213 9.8789C22 10.7576 22 12.1718 22 15.0002V16.0002C22 18.8286 22 20.2429 21.1213 21.1215C20.2426 22.0002 18.8284 22.0002 16 22.0002H8C5.17157 22.0002 3.75736 22.0002 2.87868 21.1215C2 20.2429 2 18.8286 2 16.0002L2 15.0002C2 12.1718 2 10.7576 2.87868 9.87889C3.64706 9.11051 4.82497 9.01406 7 9.00195"
@@ -52,7 +53,7 @@ const onCreate = () => {
       </div>
     </header>
 
-    <table class="mt-4 w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <table v-show="!isLoading" class="mt-4 w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
       <thead v-if="creches.length > 0" class="text-xs text-gray-700 uppercase dark:bg-gray-700 dark:text-gray-400">
         <tr>
           <th scope="col" class="py-3">Nom</th>
@@ -105,6 +106,59 @@ const onCreate = () => {
         </tr>
       </tbody>
     </table>
+
+    <div v-show="isLoading" role="status" class="w-full space-y-4 divide-y divide-gray-200 animate-pulse dark:divide-gray-700 md:p-6 dark:border-gray-700">
+      <div class="flex items-center justify-between">
+        <div>
+          <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+          <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+        </div>
+        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+      </div>
+      <div class="flex items-center justify-between pt-4">
+        <div>
+          <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+          <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+        </div>
+        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+      </div>
+      <div class="flex items-center justify-between pt-4">
+        <div>
+          <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+          <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+        </div>
+        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+      </div>
+      <div class="flex items-center justify-between pt-4">
+        <div>
+          <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+          <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+        </div>
+        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+      </div>
+      <div class="flex items-center justify-between pt-4">
+        <div>
+          <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+          <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+        </div>
+        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+      </div>
+      <div class="flex items-center justify-between pt-4">
+        <div>
+          <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+          <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+        </div>
+        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+      </div>
+      <div class="flex items-center justify-between pt-4">
+        <div>
+          <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+          <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+        </div>
+        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+      </div>
+      <span class="sr-only">Loading...</span>
+    </div>
 
     <div v-if="creches.length > 5" class="flex flex-col items-center mt-12">
       <div class="inline-flex xs:mt-0 mb-3">

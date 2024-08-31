@@ -7,9 +7,6 @@
           As a passionate developer with a knack for problem-solving, I specialize in creating dynamic, user-focused applications. With a blend of technical expertise and creativity, I transform
           complex challenges into elegant, efficient solutions. Explore my work to see how I can bring your vision to life.
         </p>
-        <router-link to="/register">
-          <ButtonPrimary message="Get Started"> </ButtonPrimary>
-        </router-link>
       </div>
       <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
         <svg xmlns="http://www.w3.org/2000/svg" width="596.91213" height="505.57464" viewBox="0 0 596.91213 505.57464" xmlns:xlink="http://www.w3.org/1999/xlink">

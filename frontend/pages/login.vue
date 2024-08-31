@@ -1,31 +1,41 @@
 <script setup lang="ts">
 import { APP_CONFIG } from "~/environment";
 import { toastConfig } from "~/utils";
+definePageMeta({
+  layout: "offline",
+});
 
+const username = ref<string>();
 const email = ref<string>();
-const password = ref<string>();
+const showEmail = ref<boolean>();
 
 const onSubmit = async () => {
-  const res: any = await $fetch(`${APP_CONFIG.API_URL}auth/login`, {
-    method: "POST",
-    body: { email: email.value, password: password.value },
-    onResponseError: (error: any) => {
-      Swal.fire({
-        ...toastConfig,
-        title: error?.response?._data?.message ? error.response._data.message : "An error occured please try again",
-        icon: "error",
-      });
-    },
+  showEmail.value = true;
+  Swal.fire({
+    ...toastConfig,
+    title: "Aucun compte trouvé, veuillez fournir votre email",
+    icon: "warning",
   });
-  if (res.status && res.status === 200) {
-    Swal.fire({
-      ...toastConfig,
-      title: "Login successful",
-      icon: "success",
-    });
-    localStorage.setItem("accessToken", res.access_token);
-    await navigateTo("/");
-  }
+  // const res: any = await $fetch(`${APP_CONFIG.API_URL}auth/login`, {
+  //   method: "POST",
+  //   body: { email: username.value },
+  //   onResponseError: (error: any) => {
+  //     Swal.fire({
+  //       ...toastConfig,
+  //       title: error?.response?._data?.message ? error.response._data.message : "An error occured please try again",
+  //       icon: "error",
+  //     });
+  //   },
+  // });
+  // if (res.status && res.status === 200) {
+  //   Swal.fire({
+  //     ...toastConfig,
+  //     title: "Login successful",
+  //     icon: "success",
+  //   });
+  //   localStorage.setItem("accessToken", res.access_token);
+  //   await navigateTo("/");
+  // }
 };
 </script>
 <template>
@@ -108,30 +118,32 @@ const onSubmit = async () => {
         stroke-width="0"
       />
     </svg>
-    <div class="w-full p-6 space-y-4 md:space-y-6 sm:p-8 mt-24">
+    <div class="w-full p-6 space-y-4 md:space-y-6 sm:p-8 flex flex-col justify-center mt-24 md:mt-0">
       <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">Se connecter à mon compte</h1>
       <form @submit.prevent="onSubmit" class="max-w-[450px]">
         <div class="mb-5">
+          <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Votre nom d'utilisateur</label>
+          <input
+            v-model="username"
+            type="text"
+            id="username"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="votre nom d'utilisateur"
+            required
+          />
+        </div>
+        <div v-if="showEmail" class="mb-5">
           <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Votre email</label>
           <input
             v-model="email"
             type="email"
             id="email"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="name@flowbite.com"
+            placeholder="john@do.e"
             required
           />
         </div>
-        <div class="mb-5">
-          <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Votre mot de passe</label>
-          <input
-            v-model="password"
-            type="password"
-            id="password"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            required
-          />
-        </div>
+
         <ButtonPrimary type="submit" message="Se connecter" />
       </form>
     </div>
