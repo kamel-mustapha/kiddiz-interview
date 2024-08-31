@@ -7,7 +7,7 @@ import { toastConfig } from "~/utils";
 
 const route = useRoute();
 const creche = ref<Creche>();
-const showCreate = ref<boolean>(true);
+const showCreate = ref<boolean>(false);
 const kidFirstName = ref<string>();
 const kidLastName = ref<string>();
 
@@ -65,7 +65,7 @@ const onCreate = async () => {
   const res: any = await $fetch(`${APP_CONFIG.API_URL}child`, {
     method: "POST",
     headers: { "X-Auth": user.value?.username ? user.value?.username : "" },
-    body: { firstName: kidFirstName.value, lastName: kidLastName.value },
+    body: { firstName: kidFirstName.value, lastName: kidLastName.value, crecheId: creche.value?.id },
     onResponseError: (error: any) => {
       loaders.value.loading = false;
       Swal.fire({
@@ -102,7 +102,7 @@ loadData();
       </div>
       <div class="border-b border-gray-300 pb-2 flex items-center justify-between">
         <h3 class="font-bold">Enfants associés</h3>
-        <ButtonPrimary message="+" />
+        <ButtonPrimary message="+" @click="showCreate = true" />
       </div>
       <table v-show="!loaders.loading" class="my-4 w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead v-if="creche && creche.kids.length > 0" class="text-xs text-gray-700 uppercase dark:bg-gray-700 dark:text-gray-400">

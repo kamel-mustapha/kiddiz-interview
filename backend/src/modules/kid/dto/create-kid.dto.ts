@@ -9,7 +9,7 @@ export class CreateKidDto {
   @IsNotEmpty()
   lastName: string;
 
-  creches: number[];
+  crecheId?: number;
 
   userId: number;
 }

@@ -4,8 +4,8 @@ export class CRUDService {
   constructor(private repository: any) {}
 
   async create(body: any) {
-    const creche = await this.repository.save(body);
-    return creche;
+    const entry = await this.repository.save(body);
+    return entry;
   }
 
   findAll(userId: number): Promise<any[]> {

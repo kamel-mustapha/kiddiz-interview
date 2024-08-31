@@ -5,12 +5,30 @@ import { Repository } from 'typeorm';
 import { CRUDService } from 'src/common/base-crud.service';
 import { Readable } from 'stream';
 import { format } from 'fast-csv';
+import { CreateKidDto } from '../dto/create-kid.dto';
+import { Creche } from 'src/modules/creche/creche.entity';
 
 @Injectable()
 export class KidService extends CRUDService {
-  constructor(@InjectRepository(Kid) private kidRepository: Repository<Kid>) {
+  constructor(
+    @InjectRepository(Kid) private kidRepository: Repository<Kid>,
+    @InjectRepository(Creche) private crecheRepository: Repository<Creche>,
+  ) {
     super(kidRepository);
   }
+  async create(body: CreateKidDto) {
+    const kid = await this.kidRepository.save(body);
+    if (body.crecheId) {
+      const creche = await this.crecheRepository.findOne({
+        where: { id: body.crecheId },
+        relations: { kids: true },
+      });
+      creche.kids = [...creche.kids, kid];
+      await this.crecheRepository.save(creche);
+    }
+    return kid;
+  }
+
   async findKidById(id: number) {
     const entry = await this.kidRepository.findOneBy({ id: id });
     return entry;
