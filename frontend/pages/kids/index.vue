@@ -137,7 +137,7 @@ loadData();
           <th scope="row" class="py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ kid.lastName }}</th>
           <td class="py-4">{{ kid.firstName }}</td>
           <td class="py-4 text-right">
-            <button @click="onDelete(kid.id)" class="bg-red-700 rounded-md px-4 py-2 hover:opacity-70">
+            <button @click="onDelete(kid.id)" class="bg-red-700 rounded-md px-2 md:px-4 py-2 hover:opacity-70">
               <TrashSvg />
             </button>
           </td>

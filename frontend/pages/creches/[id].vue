@@ -29,7 +29,7 @@ loadData();
 
 <template>
   <div class="max-w-[1300px] mx-auto">
-    <form class="max-w-sm mt-32">
+    <form class="max-w-sm mt-32 px-4 md:px-0">
       <h3 class="text-xl mb-6"><span class="font-bold">Détails de la crèche :</span> {{ creche?.name }}</h3>
       <div class="mb-5">
         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom</label>

@@ -192,17 +192,17 @@ loadData();
           <td class="py-4">{{ creche.userId }}</td>
           <td class="py-4 text-right">
             <router-link :to="'/creches/' + creche.id">
-              <button class="bg-primary rounded-md px-4 py-2 mr-2 hover:opacity-70">
+              <button class="bg-primary rounded-md px-2 md:px-4 py-2 mr-2 hover:opacity-70">
                 <EyeSvg />
               </button>
             </router-link>
-            <button @click="onEdit(creche)" class="bg-blue-800 rounded-md px-4 py-2 mr-2 hover:opacity-70">
+            <button @click="onEdit(creche)" class="bg-blue-800 rounded-md px-2 md:px-4 py-2 mr-2 hover:opacity-70">
               <PenSvg />
             </button>
-            <button @click="onExtract(creche.id)" class="bg-green-700 rounded-md px-4 py-2 hover:opacity-70 mr-2">
+            <button @click="onExtract(creche.id)" class="bg-green-700 rounded-md px-2 md:px-4 py-2 hover:opacity-70 mr-2">
               <ExtractSvg />
             </button>
-            <button @click="onDelete(creche.id)" class="bg-red-700 rounded-md px-4 py-2 hover:opacity-70">
+            <button @click="onDelete(creche.id)" class="bg-red-700 rounded-md px-2 md:px-4 py-2 hover:opacity-70">
               <TrashSvg />
             </button>
           </td>
