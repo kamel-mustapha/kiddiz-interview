@@ -173,7 +173,7 @@ loadData();
           <SearchSvg />
           <input @input="onSearch($event)" placeholder="Rechercher" class="w-full outline-none border-none focus:border-none focus:outline-none focus:ring-transparent" type="search" name="" id="" />
         </div>
-        <DownloadSvg @click="onExtract()" />
+        <DownloadSvg @click="onExtract(undefined)" />
       </div>
     </header>
 
