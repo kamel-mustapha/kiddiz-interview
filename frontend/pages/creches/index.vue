@@ -38,7 +38,7 @@ const onCreate = async () => {
     headers: { "X-Auth": user.value?.username ? user.value?.username : "" },
     body: { name: toCreateName.value },
     onResponseError: (error: any) => {
-      isLoading.value = false;
+      loaders.value.loading = false;
       Swal.fire({
         ...toastConfig,
         title: error?.response?._data?.message ? error.response._data.message : "Une erreur est survenue, veuillez réessayer",

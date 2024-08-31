@@ -7,6 +7,9 @@ import { toastConfig } from "~/utils";
 
 const route = useRoute();
 const creche = ref<Creche>();
+const showCreate = ref<boolean>(true);
+const kidFirstName = ref<string>();
+const kidLastName = ref<string>();
 
 const loadData = async () => {
   loaders.value.loading = true;
@@ -57,6 +60,29 @@ const onDelete = (id: number) => {
   });
 };
 
+const onCreate = async () => {
+  loaders.value.loading = true;
+  const res: any = await $fetch(`${APP_CONFIG.API_URL}child`, {
+    method: "POST",
+    headers: { "X-Auth": user.value?.username ? user.value?.username : "" },
+    body: { firstName: kidFirstName.value, lastName: kidLastName.value },
+    onResponseError: (error: any) => {
+      loaders.value.loading = false;
+      Swal.fire({
+        ...toastConfig,
+        title: error?.response?._data?.message ? error.response._data.message : "Une erreur est survenue, veuillez réessayer",
+        icon: "error",
+      });
+    },
+  });
+  Swal.fire({ ...toastConfig, title: "Elément créé avec succès", icon: "success" });
+  loaders.value.loading = false;
+  showCreate.value = false;
+  kidFirstName.value = "";
+  kidLastName.value = "";
+  loadData();
+};
+
 loadData();
 </script>
 
@@ -104,5 +130,32 @@ loadData();
         <ButtonSecondary message="Retour" />
       </router-link>
     </div>
+  </div>
+
+  <!-- create  dialog -->
+  <div v-if="showCreate" class="dialog w-screen h-screen fixed left-0 top-0 bg-black bg-opacity-20">
+    <form class="absolute mx-auto max-w-sm bg-white top-1/2 -translate-y-1/2 left-0 right-0 rounded-md shadow-sm px-4 py-6">
+      <h2 class="text-center font-bold text-lg mb-4">Créer un enfant</h2>
+      <div class="mb-5">
+        <label for="lastName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom</label>
+        <input v-model="kidLastName" type="text" id="lastName" class="input" placeholder="Nom de l'élève" required />
+      </div>
+      <div class="mb-5">
+        <label for="firstName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Prénom</label>
+        <input v-model="kidFirstName" type="text" id="firstName" class="input" placeholder="Prénom de l'élève" required />
+      </div>
+      <div class="flex gap-2">
+        <ButtonPrimary @click.prevent="onCreate" type="submit" message="Créer" class="w-full" />
+        <ButtonSecondary
+          type="button"
+          message="Annuler"
+          @click="
+            showCreate = false;
+            kidFirstName = '';
+            kidLastName = '';
+          "
+        />
+      </div>
+    </form>
   </div>
 </template>
