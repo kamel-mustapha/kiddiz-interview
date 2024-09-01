@@ -1,12 +1,5 @@
 import { BaseEntity } from 'src/common/base.entity';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  JoinTable,
-  ManyToMany,
-  ManyToOne,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne } from 'typeorm';
 import { User } from '../user/user.entity';
 import { Creche } from '../creche/creche.entity';
 

@@ -4,7 +4,6 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Observable } from 'rxjs';
 import { UserService } from 'src/modules/user/service/user.service';
 
 @Injectable()

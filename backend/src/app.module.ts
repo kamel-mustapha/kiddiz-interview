@@ -4,8 +4,6 @@ import { UserModule } from './modules/user/user.module';
 import { RouterModule } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DATABASE } from 'database.cred';
-import { jwtConstants } from 'jwt.cred';
-import { JwtModule } from '@nestjs/jwt';
 import { CrecheModule } from './modules/creche/creche.module';
 import { KidModule } from './modules/kid/kid.module';
 
