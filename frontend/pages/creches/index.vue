@@ -5,6 +5,10 @@ import { toastConfig } from "~/utils";
 import { user } from "~/stores/user";
 import { loaders } from "~/stores/loaders";
 
+definePageMeta({
+  middleware: ["auth"],
+});
+
 const creches = ref<Creche[]>([]);
 const showCreate = ref<boolean>(false);
 const toCreateName = ref<string>();
