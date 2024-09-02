@@ -3,4 +3,4 @@ WORKDIR /code
 COPY ./package.json .
 RUN npm install
 COPY . .
-CMD [ "start.sh" ]
+RUN npm run build
