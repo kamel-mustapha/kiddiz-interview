@@ -15,34 +15,37 @@ const showEmail = ref<boolean>(false);
 const onSubmit = async () => {
   loaders.value.loading = true;
   const url = showEmail.value ? `${APP_CONFIG.API_URL}auth/register` : `${APP_CONFIG.API_URL}auth/login`;
-  console.log(url);
   let body: { username?: string; email?: string } = { username: username.value };
   if (showEmail) body = { ...body, email: email.value };
-  const res: any = await $fetch(url, {
-    method: "POST",
-    body,
-    onResponseError: (error: any) => {
-      loaders.value.loading = false;
-      if (error?.response?._data?.message === "User not found") {
-        showEmail.value = true;
-        Swal.fire({
-          ...toastConfig,
-          title: "Aucun compte trouvé, veuillez fournir votre email",
-          icon: "warning",
-        });
-      } else {
-        Swal.fire({
-          ...toastConfig,
-          title: error?.response?._data?.message ? error.response._data.message : "Une erreur est survenue, veuillez réessayer",
-          icon: "error",
-        });
-      }
-    },
-  });
-  loaders.value.loading = false;
-  if (res.username) {
-    user.value = { id: res.id, username: res.username, email: res.email };
-    await navigateTo("/");
+  try {
+    const res: any = await $fetch(url, {
+      method: "POST",
+      body,
+      onResponseError: (error: any) => {
+        loaders.value.loading = false;
+        if (error?.response?._data?.message === "User not found") {
+          showEmail.value = true;
+          Swal.fire({
+            ...toastConfig,
+            title: "Aucun compte trouvé, veuillez fournir votre email",
+            icon: "warning",
+          });
+        } else {
+          Swal.fire({
+            ...toastConfig,
+            title: error?.response?._data?.message ? error.response._data.message : "Une erreur est survenue, veuillez réessayer",
+            icon: "error",
+          });
+        }
+      },
+    });
+    loaders.value.loading = false;
+    if (res.username) {
+      user.value = { id: res.id, username: res.username, email: res.email };
+      await navigateTo("/");
+    }
+  } catch (e) {
+    loaders.value.loading = false;
   }
 };
 </script>

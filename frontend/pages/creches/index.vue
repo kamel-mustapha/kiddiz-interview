@@ -223,16 +223,14 @@ loadData();
 
   <!-- create  dialog -->
   <div v-if="showCreate" class="dialog w-screen h-screen fixed left-0 top-0 bg-black bg-opacity-20">
-    <form class="absolute mx-auto max-w-sm bg-white top-1/2 -translate-y-1/2 left-0 right-0 rounded-md shadow-sm px-4 py-6">
+    <form @submit.prevent="onCreate" class="absolute mx-auto max-w-sm bg-white top-1/2 -translate-y-1/2 left-0 right-0 rounded-md shadow-sm px-4 py-6">
       <h2 class="text-center font-bold text-lg mb-4">{{ isEdit ? "Modifier" : "Créer" }} une crèche</h2>
       <div class="mb-5">
         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom</label>
         <input v-model="toCreateName" type="text" id="name" class="input" placeholder="Nom de la crèche" required />
       </div>
       <div class="flex gap-2">
-        <ButtonPrimary v-show="!isEdit" @click.prevent="onCreate" type="submit" message="Créer" class="w-full" />
-        <ButtonPrimary v-show="isEdit" @click.prevent="onConfirmEdit" type="submit" message="Modifier" class="w-full" />
-
+        <ButtonPrimary type="submit" :message="isEdit ? 'Modifier' : 'Créer'" class="w-full" />
         <ButtonSecondary
           type="button"
           message="Annuler"
